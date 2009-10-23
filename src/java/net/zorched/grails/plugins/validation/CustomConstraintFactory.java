@@ -79,7 +79,7 @@ public class CustomConstraintFactory implements ConstraintFactory {
             boolean isValid = (Boolean) c.call(params.toArray());
             if (! isValid) {
                 Object[] args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue };
-                super.rejectValue(target, errors, constraint.getDefaultMessageCode(), "not." + constraint.getName(), args);
+                super.rejectValue(target, errors, constraint.getDefaultMessageCode(), constraint.getFailureCode(), args);
             }
         }
     }

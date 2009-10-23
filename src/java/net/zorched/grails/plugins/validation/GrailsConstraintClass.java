@@ -37,5 +37,7 @@ public interface GrailsConstraintClass extends InjectableGrailsClass {
 
 	public String getName();
 	
-	public String getDefaultMessageCode();
+    public String getDefaultMessageCode();
+
+    public String getFailureCode();
 }

@@ -40,7 +40,8 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
     private static final String EXPECTS_PARAMS_PROPERTY = "expectsParams";
     private static final String NAME_PROPERTY = "name";
     private static final String DEFAULT_MESSAGE_CODE_PROPERTY = "defaultMessageCode";
-    
+    private static final String FAILURE_CODE_PROPERTY = "failureCode";
+
     private static final String VALIDATE_CLOSURE = "validate";
     private static final String SUPPORTS_CLOSURE = "supports";
 
@@ -80,6 +81,12 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
 	public String getDefaultMessageCode() {
 		String obj = (String) getPropertyValue(DEFAULT_MESSAGE_CODE_PROPERTY);
 		if (obj == null) return "default.not." + getConstraintName() + ".message";
+		return obj;
+	}
+
+    public String getFailureCode() {
+		String obj = (String) getPropertyValue(FAILURE_CODE_PROPERTY);
+		if (obj == null) return "not." + getConstraintName() + ".message";
 		return obj;
 	}
 

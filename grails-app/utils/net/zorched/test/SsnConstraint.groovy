@@ -4,6 +4,7 @@ class SsnConstraint {
 
     static name = "social"
     static defaultMessageCode = "default.not.ssn.message"
+    static failureCode = "not.ssn"
 
     def supports = { type ->
         return type!= null && String.class.isAssignableFrom(type);
