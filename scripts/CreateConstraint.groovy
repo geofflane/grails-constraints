@@ -27,11 +27,11 @@ grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 includeTargets << new File ( "${grailsHome}/scripts/Init.groovy" )  
 includeTargets << new File( "${grailsHome}/scripts/CreateIntegrationTest.groovy")
 
-task ('default': "Creates a new custom Validation") {
+task ('default': "Creates a new custom Constraint") {
     depends(checkVersion)
 
-	typeName = "Validation" 
-	artifactName = "Validation" 	
+	typeName = "Constraint"
+	artifactName = "Constraint"
 	artifactPath = "grails-app/utils"
 		
 	createArtifact()

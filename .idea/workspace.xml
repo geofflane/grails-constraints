@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager" verified="true">
-    <list default="true" readonly="true" id="66393989-4408-4426-90ae-6c277a0dc801" name="Default" comment="" />
+    <list default="true" readonly="true" id="66393989-4408-4426-90ae-6c277a0dc801" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/scripts/CreateValidation.groovy" afterPath="$PROJECT_DIR$/scripts/CreateConstraint.groovy" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/templates/artifacts/Validation.groovy" afterPath="$PROJECT_DIR$/src/templates/artifacts/Constraint.groovy" />
+    </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="constraints.iws" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -69,24 +74,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConstraintsGrailsPlugin.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ConstraintsGrailsPlugin.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="66" selection-start="745" selection-end="745" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="plugin.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
@@ -96,10 +83,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SsnConstraint.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SsnConstraint.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/utils/net/zorched/test/SsnConstraint.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="21" selection-start="47" selection-end="47" vertical-scroll-proportion="0.036253776">
+            <state line="2" column="21" selection-start="47" selection-end="47" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateConstraint.groovy" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/CreateConstraint.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="4" selection-start="984" selection-end="984" vertical-scroll-proportion="0.52567977">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constraint.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/templates/artifacts/Constraint.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -169,6 +174,7 @@
         <option value="$PROJECT_DIR$/src/java/net/zorched/grails/plugins/validation/GrailsConstraintClass.java" />
         <option value="$PROJECT_DIR$/src/java/net/zorched/grails/plugins/validation/CustomConstraintFactory.java" />
         <option value="$PROJECT_DIR$/grails-app/utils/net/zorched/test/SsnConstraint.groovy" />
+        <option value="$PROJECT_DIR$/scripts/CreateConstraint.groovy" />
       </list>
     </option>
   </component>
@@ -270,6 +276,14 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="artifacts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -290,6 +304,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="validation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="constraints" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="constraints" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -521,6 +549,20 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
+    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy Script">
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workDir" value="$PROJECT_DIR$" />
+      <setting name="debug" value="false" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
     <list size="0" />
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -611,20 +653,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scripts/CreateValidation.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="607" selection-end="607" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/_Uninstall.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/_Install.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="35" selection-start="265" selection-end="265" vertical-scroll-proportion="0.0">
@@ -718,7 +746,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/utils/net/zorched/test/SsnConstraint.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="21" selection-start="47" selection-end="47" vertical-scroll-proportion="0.036253776">
+        <state line="2" column="21" selection-start="47" selection-end="47" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/artifacts/Constraint.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/CreateConstraint.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="4" selection-start="984" selection-end="984" vertical-scroll-proportion="0.52567977">
           <folding />
         </state>
       </provider>
