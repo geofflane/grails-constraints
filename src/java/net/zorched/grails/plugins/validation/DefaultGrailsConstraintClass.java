@@ -39,7 +39,12 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
 
     private static final String EXPECTS_PARAMS_PROPERTY = "expectsParams";
     private static final String NAME_PROPERTY = "name";
+
+    /** The default error message if none is found in the message.properties */
+    private static final String DEFAULT_MESSAGE_PROPERTY = "defaultMessage";
+    /** The default message key to look up in messages.properties */
     private static final String DEFAULT_MESSAGE_CODE_PROPERTY = "defaultMessageCode";
+    /** The default suffix to append to Class.property in the messages.properties for a custom error message*/
     private static final String FAILURE_CODE_PROPERTY = "failureCode";
 
     private static final String VALIDATE_CLOSURE = "validate";
@@ -80,13 +85,19 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
 
 	public String getDefaultMessageCode() {
 		String obj = (String) getPropertyValue(DEFAULT_MESSAGE_CODE_PROPERTY);
-		if (obj == null) return "default.not." + getConstraintName() + ".message";
+		if (obj == null) return "default.invalid." + getConstraintName() + ".message";
+		return obj;
+	}
+
+    public String getDefaultMessage() {
+		String obj = (String) getPropertyValue(DEFAULT_MESSAGE_PROPERTY);
+		if (obj == null) return "Property [{0}] of class [{1}] with value [{2}] is not valid";
 		return obj;
 	}
 
     public String getFailureCode() {
 		String obj = (String) getPropertyValue(FAILURE_CODE_PROPERTY);
-		if (obj == null) return "not." + getConstraintName() + ".message";
+		if (obj == null) return getConstraintName() + ".invalid";
 		return obj;
 	}
 

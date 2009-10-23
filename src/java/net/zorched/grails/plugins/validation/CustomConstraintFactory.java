@@ -64,6 +64,17 @@ public class CustomConstraintFactory implements ConstraintFactory {
         }
 
         @Override
+        protected String getDefaultMessage(String code) {
+            System.out.println("xxx: " + code);
+            
+            String m = super.getDefaultMessage(code);
+            if (null == m) {
+                m = constraint.getDefaultMessage();
+            }
+            return m;
+        }
+
+        @Override
         protected void processValidate(Object target, Object propertyValue, Errors errors) {
             Closure c = constraint.getValidationMethod();
             int paramCount = c.getMaximumNumberOfParameters();

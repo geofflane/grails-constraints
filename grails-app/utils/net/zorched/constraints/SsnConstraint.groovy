@@ -1,10 +1,8 @@
-package net.zorched.test
+package net.zorched.constraints
 
 class SsnConstraint {
 
-    static name = "social"
-    static defaultMessageCode = "default.not.ssn.message"
-    static failureCode = "not.ssn"
+    static defaultMessage = "Property [{0}] of class [{1}] with value [{2}] is not a valid SSN"
 
     def supports = { type ->
         return type!= null && String.class.isAssignableFrom(type);

@@ -9,11 +9,18 @@
   <documentation>http://grails.org/GrailsConstraints+Plugin</documentation>
   <resources>
     <resource>DataSource</resource>
+    <resource>UrlMappings</resource>
+    <resource>TestController</resource>
+    <resource>net.zorched.test.Address</resource>
     <resource>net.zorched.test.Foo</resource>
+    <resource>net.zorched.test.Login</resource>
     <resource>net.zorched.test.Person</resource>
     <resource>net.zorched.test.User</resource>
+    <resource>net.zorched.constraints.ComparisonConstraint</resource>
+    <resource>net.zorched.constraints.SsnConstraint</resource>
+    <resource>net.zorched.constraints.UsPhoneConstraint</resource>
+    <resource>net.zorched.constraints.UsZipConstraint</resource>
     <resource>net.zorched.test.BeginsWithConstraint</resource>
-    <resource>net.zorched.test.SsnConstraint</resource>
     <resource>net.zorched.test.StartsAndEndsWithConstraint</resource>
     <resource>net.zorched.test.TwoLongConstraint</resource>
   </resources>

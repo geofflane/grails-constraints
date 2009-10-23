@@ -18,6 +18,7 @@ import net.zorched.grails.plugins.validation.ConstraintArtefactHandler
 import net.zorched.grails.plugins.validation.GrailsConstraintClass
 import org.codehaus.groovy.grails.validation.ConstrainedProperty
 import net.zorched.grails.plugins.validation.CustomConstraintFactory
+import net.zorched.constraints.*
 
 class ConstraintsGrailsPlugin {
     // the plugin version
@@ -30,8 +31,10 @@ class ConstraintsGrailsPlugin {
     def dependsOn = [:]
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-            "grails-app/views/error.gsp",
+            "grails-app/views/*.gsp",
+            "grails-app/views/**/*.gsp",
             "grails-app/domain/**/*.groovy",
+            "grails-app/controllers/**/*.groovy",
             "grails-app/utils/net/zorched/test/**.groovy"
     ]
 
@@ -53,8 +56,13 @@ class ConstraintsGrailsPlugin {
             "file:./plugins/*/grails-app/utils/**/*Constraint.groovy"
     ]
 
-    // We can add provided constaints in this plugin using this
-    // def providedArtefacts = []
+    // We can add provided constraints in this plugin using this
+    def providedArtefacts = [
+            ComparisonConstraint,
+            SsnConstraint,
+            UsPhoneConstraint,
+            UsZipConstraint
+    ]
 
     def artefacts = [new ConstraintArtefactHandler()]
 
@@ -66,13 +74,14 @@ class ConstraintsGrailsPlugin {
     }
 
     def doWithDynamicMethods = {applicationContext ->
-        log.info("Configuring custom constraints...")
+        println "Configuring custom constraints..."
 
         for (GrailsConstraintClass c in application.constraintClasses) {
             def constraintClass = c
             def constraintName = constraintClass.name
 
-            log.debug constraintName
+            log.debug "Loading constraint: $constraintName"
+            println "Loading constraint: $constraintName"
 
             ConstrainedProperty.registerNewConstraint(constraintName,
                     new CustomConstraintFactory(constraintClass))

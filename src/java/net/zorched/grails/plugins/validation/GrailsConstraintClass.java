@@ -36,7 +36,9 @@ public interface GrailsConstraintClass extends InjectableGrailsClass {
     Closure getSupportsMethod();
 
 	public String getName();
-	
+
+    public String getDefaultMessage();
+
     public String getDefaultMessageCode();
 
     public String getFailureCode();

@@ -4,6 +4,6 @@ class User {
     String ssn
 
     static constraints = {
-        ssn(social: true)
+        ssn(ssn: true)
     }
 }
