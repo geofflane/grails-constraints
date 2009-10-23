@@ -1,0 +1,21 @@
+<plugin name='constraints' version='0.1' grailsVersion='1.1.1 &gt; *'>
+  <author>Geoff Lane</author>
+  <authorEmail>geoff@zorched.net</authorEmail>
+  <title>Custom domain constraints plugin</title>
+  <description>\
+    This plugin allows you to create custom domain validations that are applied the same
+    way as built-in domain constraints.
+    </description>
+  <documentation>http://grails.org/GrailsConstraints+Plugin</documentation>
+  <resources>
+    <resource>DataSource</resource>
+    <resource>net.zorched.test.Foo</resource>
+    <resource>net.zorched.test.Person</resource>
+    <resource>net.zorched.test.User</resource>
+    <resource>net.zorched.test.BeginsWithConstraint</resource>
+    <resource>net.zorched.test.SsnConstraint</resource>
+    <resource>net.zorched.test.StartsAndEndsWithConstraint</resource>
+    <resource>net.zorched.test.TwoLongConstraint</resource>
+  </resources>
+  <dependencies />
+</plugin>
