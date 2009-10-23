@@ -1,6 +1,6 @@
-class @artifact.name @{
+class @artifact.name@ {
 
-    def validate() {
+    def validate = { propertyValue ->
         // execute validation
     }
 }

@@ -16,24 +16,22 @@
 
 /**
  * Gant script that creates a Grails Validation
- * 
+ *
  * @author Geoff Lane
  * @since 0.1
  */
 
-Ant.property(environment:"env")                             
-grailsHome = Ant.antProject.properties."env.GRAILS_HOME"    
+includeTargets << grailsScript("_GrailsInit")
+includeTargets << grailsScript("_GrailsCreateArtifacts")
 
-includeTargets << new File ( "${grailsHome}/scripts/Init.groovy" )  
-includeTargets << new File( "${grailsHome}/scripts/CreateIntegrationTest.groovy")
+target ('default': "Creates a new constraint") {
+    depends(checkVersion, parseArguments)
 
-task ('default': "Creates a new custom Constraint") {
-    depends(checkVersion)
+    def type = "Constraint"
+    promptForName(type: type)
 
-	typeName = "Constraint"
-	artifactName = "Constraint"
-	artifactPath = "grails-app/utils"
-		
-	createArtifact()
-	createTestSuite() 
+    def name = argsMap["params"][0]
+    createArtifact(name: name, suffix: type, type: type, path: "grails-app/utils")
+    createUnitTest(name: name, suffix: type, superClass: "GroovyTestCase")
 }
+
