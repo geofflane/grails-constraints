@@ -1,6 +1,11 @@
 # Custom Constraints #
-This Grails plugin allows you to create custom domain Constraints for use during
-validation.
+This Grails plugin allows you to create custom domain Constraints for validating Domain objects.
+
+Without this plugin, if you have a custom validation that you want to perform on
+a Domain object, you have to use a generic *validator* constraint and define it inline.
+With this plugin, you can create reusable, shareable constraints that you can use on
+multiple Domain objects. You can then package Constraints in plugins of their own and reuse them across
+projects as well.
 
 1. Create a groovy file in */grails-app/utils/* called *Constraint.groovy
 2. Implement a validate closure

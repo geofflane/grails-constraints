@@ -63,80 +63,7 @@
   </component>
   <component name="FileColors" enabled="false" enabledForTabs="false" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="ConstraintArtefactHandler.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/net/zorched/grails/plugins/validation/ConstraintArtefactHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="13" selection-start="859" selection-end="859" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SsnConstraint.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/utils/net/zorched/test/SsnConstraint.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="37" selection-start="294" selection-end="310" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CreateConstraint.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/CreateConstraint.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="1" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Constraint.groovy" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/templates/artifacts/Constraint.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="101" selection-end="101" vertical-scroll-proportion="0.105726875">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StartsAndEndsWithConstraint.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/utils/net/zorched/test/StartsAndEndsWithConstraint.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="35" selection-start="61" selection-end="61" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DefaultGrailsConstraintClass.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/net/zorched/grails/plugins/validation/DefaultGrailsConstraintClass.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="13" selection-start="1052" selection-end="1052" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GrailsConstraintClass.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/net/zorched/grails/plugins/validation/GrailsConstraintClass.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="0" selection-start="1190" selection-end="1190" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CustomConstraintFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/net/zorched/grails/plugins/validation/CustomConstraintFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="42" selection-start="2549" selection-end="2549" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -589,8 +516,8 @@
     </task>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="22" width="1440" height="822" extended-state="0" />
-    <editor active="false" />
+    <frame x="-1" y="22" width="1440" height="822" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" />
@@ -604,7 +531,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24946082" sideWeight="0.5" order="0" side_tool="false" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24946082" sideWeight="0.5" order="0" side_tool="false" />
       <window_info id="Grails" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" />
@@ -698,13 +625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/net/zorched/grails/plugins/validation/ConstraintArtefactHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="859" selection-end="859" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/java/net/zorched/grails/plugins/validation/GrailsConstraintClass.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="43" column="0" selection-start="1190" selection-end="1190" vertical-scroll-proportion="0.0">
@@ -726,6 +646,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/artifacts/Constraint.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="101" selection-end="101" vertical-scroll-proportion="0.105726875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/CreateConstraint.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="1" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0">
@@ -740,9 +667,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/artifacts/Constraint.groovy">
+    <entry file="file://$PROJECT_DIR$/src/java/net/zorched/grails/plugins/validation/ConstraintArtefactHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="101" selection-end="101" vertical-scroll-proportion="0.105726875">
+        <state line="27" column="13" selection-start="859" selection-end="859" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
