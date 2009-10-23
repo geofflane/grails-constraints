@@ -9,6 +9,8 @@ class UsZipConstraint {
     }
 
     def validate = { val ->
+        if (! params)
+            return true
         return val ==~ /^\d{5}(\-\d{4})?$/
     }
 }

@@ -81,7 +81,7 @@ class ConstraintsGrailsPlugin {
             def constraintName = constraintClass.name
 
             log.debug "Loading constraint: $constraintName"
-            println "Loading constraint: $constraintName"
+            // println "Loading constraint: $constraintName"
 
             ConstrainedProperty.registerNewConstraint(constraintName,
                     new CustomConstraintFactory(constraintClass))
@@ -93,8 +93,8 @@ class ConstraintsGrailsPlugin {
     private def addParamToConstraints(GrailsConstraintClass c) {
         // XXX: Is there a better way of injecting a param?
         MetaClass mc = c.metaClass
-        def params = null
-        mc.getParams = {-> return params }
-        mc.setParams = {p -> params = p }
+        def paramVal = null
+        mc.getParams = {-> return paramVal }
+        mc.setParams = {p -> paramVal = p }
     }
 }

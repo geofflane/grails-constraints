@@ -64,9 +64,7 @@ public class CustomConstraintFactory implements ConstraintFactory {
         }
 
         @Override
-        protected String getDefaultMessage(String code) {
-            System.out.println("xxx: " + code);
-            
+        protected String getDefaultMessage(String code) {            
             String m = super.getDefaultMessage(code);
             if (null == m) {
                 m = constraint.getDefaultMessage();
