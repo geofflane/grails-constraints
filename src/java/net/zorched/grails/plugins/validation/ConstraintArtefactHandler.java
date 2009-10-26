@@ -30,7 +30,7 @@ public class ConstraintArtefactHandler extends ArtefactHandlerAdapter {
     public static final String TYPE = "Constraint";
 
     public ConstraintArtefactHandler() {
-        super(TYPE, GrailsConstraintClass.class, DefaultGrailsConstraintClass.class, null);
+        super(TYPE, GrailsConstraintClass.class, DefaultGrailsConstraintClass.class, TYPE);
     }
 
      public boolean isArtefactClass(Class clazz) {

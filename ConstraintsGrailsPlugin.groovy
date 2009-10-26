@@ -85,16 +85,6 @@ class ConstraintsGrailsPlugin {
 
             ConstrainedProperty.registerNewConstraint(constraintName,
                     new CustomConstraintFactory(constraintClass))
-
-            addParamToConstraints(c)
         }
-    }
-
-    private def addParamToConstraints(GrailsConstraintClass c) {
-        // XXX: Is there a better way of injecting a param?
-        MetaClass mc = c.metaClass
-        def paramVal = null
-        mc.getParams = {-> return paramVal }
-        mc.setParams = {p -> paramVal = p }
     }
 }

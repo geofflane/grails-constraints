@@ -38,18 +38,40 @@ public class CustomConstraintFactory implements ConstraintFactory {
         return new CustomConstraint();
     }
 
-
     /**
      * Wrapper class that extends the AbstractConstraint so the user supplied constraint
      * conforms to the proper API.
      */
     class CustomConstraint extends AbstractConstraint {
+        
+        private Closure validateClosure;
+        private Closure supportsClosure;
+        private int validationParamCount;
+        
+        public CustomConstraint() {
+            Closure temp = constraint.getValidationMethod();
+            if (null != temp) {
+                validateClosure = (Closure) temp.clone();
+                validateClosure.setDelegate(this);
+            }
+            
+            temp = constraint.getSupportsMethod();
+            if (null != temp) {
+                supportsClosure = (Closure) temp.clone();
+            }
+            
+            validationParamCount =  validateClosure.getMaximumNumberOfParameters();
+        }
+        
+        public Object getParams() {
+            return constraintParameter;
+        }
+        
         public boolean supports(Class aClass) {
-            Closure c = constraint.getSupportsMethod();
-            if (null == c) {
+            if (null == supportsClosure) {
                 return true;
             }
-            return (Boolean) c.call(aClass);
+            return (Boolean) supportsClosure.call(aClass);
         }
 
         public String getName() {
@@ -58,8 +80,6 @@ public class CustomConstraintFactory implements ConstraintFactory {
 
         public void setParameter(Object constraintParameter) {
             constraint.validateParams(constraintParameter, constraintPropertyName, constraintOwningClass);
-
-            constraint.getMetaClass().setProperty(constraint, "params", constraintParameter);
             super.setParameter(constraintParameter);
         }
 
@@ -74,20 +94,17 @@ public class CustomConstraintFactory implements ConstraintFactory {
 
         @Override
         protected void processValidate(Object target, Object propertyValue, Errors errors) {
-            Closure c = constraint.getValidationMethod();
-            int paramCount = c.getMaximumNumberOfParameters();
-
             ArrayList<Object> params = new ArrayList<Object>();
-            if (paramCount > 0)
+            if (validationParamCount > 0)
                 params.add(propertyValue);
-            if (paramCount > 1)
+            if (validationParamCount > 1)
                 params.add(target);
-            if (paramCount > 2)
+            if (validationParamCount > 2)
                 params.add(errors);
 
-            boolean isValid = (Boolean) c.call(params.toArray());
+            boolean isValid = (Boolean) validateClosure.call(params.toArray());
             if (! isValid) {
-                Object[] args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue };
+                Object[] args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue, constraintParameter };
                 super.rejectValue(target, errors, constraint.getDefaultMessageCode(), constraint.getFailureCode(), args);
             }
         }

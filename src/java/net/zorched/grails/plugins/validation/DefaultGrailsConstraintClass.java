@@ -34,8 +34,6 @@ import java.util.Map;
 public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass implements GrailsConstraintClass {
 
 	public static final String CONSTRAINT = "Constraint";
-    private Closure validateMethod;
-    private Closure supportsMethod;
 
     private static final String EXPECTS_PARAMS_PROPERTY = "expectsParams";
     private static final String NAME_PROPERTY = "name";
@@ -49,26 +47,14 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
 
     private static final String VALIDATE_CLOSURE = "validate";
     private static final String SUPPORTS_CLOSURE = "supports";
+    
+    private Closure validateMethod;
+    private Closure supportsMethod;
 
     public DefaultGrailsConstraintClass(Class clazz) {
 		super(clazz, CONSTRAINT);
-        validateMethod = getMethodOrClosureMethod(VALIDATE_CLOSURE);
-        supportsMethod = getMethodOrClosureMethod(SUPPORTS_CLOSURE);
-    }
-
-    private Closure getMethodOrClosureMethod(String methodName) {
-        Closure closure = (Closure) getPropertyOrStaticPropertyOrFieldValue(methodName, Closure.class);
-        if(closure == null) {
-            MetaMethod method = getMetaClass().getMetaMethod(methodName, new Object[]{Object.class});
-            if(method!=null) {
-            	if(method.isStatic()) {
-            		closure = new MethodClosure(getClazz(), methodName);
-            	} else {
-            		closure = new MethodClosure(getReference(), methodName);
-            	}
-            }
-        }
-        return closure;
+        validateMethod = (Closure) getPropertyValue(VALIDATE_CLOSURE, Closure.class);
+        supportsMethod = (Closure) getPropertyValue(SUPPORTS_CLOSURE, Closure.class);
     }
 
     public Closure getValidationMethod() {

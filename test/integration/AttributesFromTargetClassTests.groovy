@@ -1,6 +1,6 @@
 import net.zorched.test.Login
 
-class LoginTests extends GroovyTestCase {
+class AttributesFromTargetClassTests extends GroovyTestCase {
 
     void testLoginComparisonWorks() {
         def l = new Login(pass: "secret", compare: "secret")
