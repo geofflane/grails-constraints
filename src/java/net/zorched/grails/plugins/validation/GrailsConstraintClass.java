@@ -29,10 +29,14 @@ import java.util.Map;
 public interface GrailsConstraintClass extends InjectableGrailsClass {
 	
 	/**
-	 * Method which is executed by the validator.
+	 * Get the method which is executed by the validator.
 	 */
 	Closure getValidationMethod();
 
+    /**
+     * Get the method which is executed to determine if the constrained property
+     * is supported by this Constraint.
+     */
     Closure getSupportsMethod();
 
 	public String getName();

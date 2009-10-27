@@ -26,8 +26,7 @@ class ComparisonConstraint {
         def compareVal = target."$params"
         if (null == val || null == compareVal)
             return false
-            
-        println "$compareVal : ${compareVal.class}"
+
         return val.compareTo(compareVal) == 0
     }
 }
