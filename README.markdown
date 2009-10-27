@@ -25,7 +25,7 @@ Under */grails-app/utils/*:
 Unless you set the *defaultMessage* static property, then it is a good idea to add an entry to messages.properties
 with a default format string to show the user if validation fails.
 
-The default format is: default.invalid.<constraint name>.message
+The default format is: default.invalid.constraintName.message
 
 ## Apply the Constraint to a domain class ##
 	class Person {
@@ -39,17 +39,38 @@ The default format is: default.invalid.<constraint name>.message
 ## Details
 
 ### Constraint parameters ###
-Any parameters passed to the constraint will be available in your Constraint object via the params
+Any parameters passed to the constraint will be available in your Constraint object via the *params*
 property.
 
+e.g.
+	class FooDomain {
+		String prop
+		static constraints = {
+			prop(someConstraint: ['a':1, 'b':2])
+		}
+	}
+
+	def validate = { val ->
+		def a = params.a
+		def b = params.b
+		return val == a + b
+    }
+
 ### validate closure (required) ###
-The validate closure takes up to 3 parameters
+The validate closure is the main part of the algorithm where validation is performed. It should return true if the
+validation was successful and false if the validation did not succeed.
+
+The validate closure takes up to 3 parameters:
 
 1. The value to be validated
 2. The target object being validated
 3. The validation errors collection
 
-This is the main validation routine to run to validate the property.
+e.g.
+	def validate = { thePropertyValue, theTargetObject, errorsListYouProbablyWontEverNeed ->
+		return null != thePropertyValue && theTargetObject.rocks()
+    }
+
 
 ### supports closure (optional) ###
 Your Constraint can optionally implement a *supports* closure that will allow you to restrict the types
