@@ -23,18 +23,39 @@ import org.springframework.validation.Errors;
 
 import java.util.ArrayList;
 
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.context.ApplicationContext;
+import org.hibernate.SessionFactory;
+
 /**
  * Factory for creating wrapped custom Constraints
  */
 public class CustomConstraintFactory implements ConstraintFactory {
 
     private final DefaultGrailsConstraintClass constraint;
+    private final ApplicationContext applicationContext;
 
     public CustomConstraintFactory(DefaultGrailsConstraintClass c) {
+        this(null, c);
+    }
+    
+    public CustomConstraintFactory(ApplicationContext applicationContext, DefaultGrailsConstraintClass c) {
         this.constraint = c;
+        this.applicationContext = applicationContext;
     }
 
+    /**
+     * Create a new instance of a constraint.
+     * If the application is using Hibernate and the Constraint is marked persistent, then a CustomPersistentConstraint
+     * will be used. Otherwise a CustomConstraint (non-persistent will be used).
+     */
     public Constraint newInstance() {
+        if (constraint.isPersistent()) {
+            if (null == applicationContext) 
+                throw new IllegalStateException("applicationContext is null. Are you using the hibernate plugin? Persistent constraints are only supported with hibernate persistence.");
+            return new CustomPersistentConstraint();
+        }
+            
         return new CustomConstraint();
     }
 
@@ -107,6 +128,29 @@ public class CustomConstraintFactory implements ConstraintFactory {
                 Object[] args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue, constraintParameter };
                 super.rejectValue(target, errors, constraint.getDefaultMessageCode(), constraint.getFailureCode(), args);
             }
+        }
+    }
+    
+    /**
+     * Wrapper class that extends the CustomConstraint to support Constraints that
+     * need access to the database for their validation
+     */
+    class CustomPersistentConstraint extends CustomConstraint {
+        
+        public ApplicationContext getApplicationContext() {
+            return applicationContext;
+        }
+        
+        /**
+         * Get a HibernateTemplate from the Spring ApplicationContext.
+         */
+        public HibernateTemplate getHibernateTemplate() {
+            if (applicationContext == null) throw new IllegalStateException("Persistent Constraint requires an instance of ApplicationContext, but it was null. Did you set 'static persistent=true' ?");
+
+            if (applicationContext.containsBean("sessionFactory")) {
+                return new HibernateTemplate((SessionFactory) applicationContext.getBean("sessionFactory"),true);
+            }
+            return null;
         }
     }
 }

@@ -45,6 +45,8 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
     /** The default suffix to append to Class.property in the messages.properties for a custom error message*/
     private static final String FAILURE_CODE_PROPERTY = "failureCode";
 
+    private static final String PERSISTENT_PROPERTY = "persistent";
+    
     private static final String VALIDATE_CLOSURE = "validate";
     private static final String SUPPORTS_CLOSURE = "supports";
     
@@ -93,6 +95,14 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
             return GrailsNameUtils.getPropertyName(GrailsNameUtils.getLogicalName(getClazz(), CONSTRAINT));
         }
 		return obj;
+    }
+    
+    public boolean isPersistent() {
+        Boolean obj = (Boolean) getPropertyValue(PERSISTENT_PROPERTY);
+		if (obj != null) {
+            return obj.booleanValue();
+        }
+        return false;
     }
 
     public void validateParams(Object constraintParameter, String constraintPropertyName, Class constraintPropertyOwner) {

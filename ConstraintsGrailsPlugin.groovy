@@ -76,13 +76,22 @@ class ConstraintsGrailsPlugin {
     def doWithDynamicMethods = {applicationContext ->
         println "Configuring custom constraints..."
 
+        boolean usingHibernate = manager.hasGrailsPlugin("hibernate")
         for (GrailsConstraintClass c in application.constraintClasses) {
-            def constraintClass = c
-            def constraintName = constraintClass.name
+            registerConstraint(c, usingHibernate, applicationContext)
+        }
+    }
+    
+    private void registerConstraint(constraintClass, usingHibernate, applicationContext) {
+        def constraintName = constraintClass.name
+        // println "Loading constraint: $constraintClass.Name"
 
-            log.debug "Loading constraint: $constraintName"
-            // println "Loading constraint: $constraintName"
-
+        if (usingHibernate) {
+            // println "Hibernate plugin in use, allowing persistent constraints"
+            ConstrainedProperty.registerNewConstraint(constraintName,
+                    new CustomConstraintFactory(applicationContext, constraintClass))
+        } else {
+            // Don't allow persistent constraints if hibernate is not being used
             ConstrainedProperty.registerNewConstraint(constraintName,
                     new CustomConstraintFactory(constraintClass))
         }

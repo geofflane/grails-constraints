@@ -99,19 +99,30 @@ e.g.:
 2. UsPhoneConstraint -> usPhone
 
 You can override this by providing a static name variable in your constraint definition:
+
    static name = "customName"
 
 ### defaultMessageCode property (optional) ###
 The defaultMessageCode property defines the default key that will be used to look up the error message
 in the *grails-app/i18n/messages.properties* files.
 
+The default value is *default.$name.invalid.message*
+You can override this by providing a static variable:
+
+	static defaultMessageCode = "default.something.unset.message"
+
 ### failureCode property (optional) ###
 The failureCode property defines a key that can be used to lookup error messages in the *grails-app/i18n/messages.properties* files.
 The value of this property is appended to the end of the Class.property name that the Constraint is applied to.
 
-e.g.
+The default value is *invalid.$name*
+e.g.:
 With a CustomConstraint defined the default entry in messages.properties will be something like:
 Person.firstName.custom.invalid
+
+You can override this by providing a static variable:
+
+	static failureCode = "unset.constraint"
 
 ### defaultMessage property (optional) ###
 If no value is found in *messages.properties* for the defaultMessageCode or the failureCode then this message will be
@@ -131,7 +142,22 @@ e.g.:
 	static expectsParams = true
 	static expectsParams = { parameters -> // ... do something }
 
-## Example ##
+### persistent property (optional) ###
+If you need access to the database to perform your validation, you can make your Constraint a persistent constraint by
+setting the static property *persist = true* in your Constraint class.
+
+This will make a *hibernateTemplate* property available to your Constraint that you can use to access the database.
+Generally these will be more complicated to write because they require knowledge of the details of the Domain
+
+Set this property in your Constraint class with:
+
+	static persistent = true
+
+> ### Note ###
+> Persistent constraints are only supported when using the Hibernate plugin.
+
+## Simple Example ##
+
 	class SsnConstraint {
 
 	    static name = "social"
@@ -155,6 +181,7 @@ e.g.:
 	
 	
 ## Example With Params ##
+
 	class StartsAndEndsWithConstraint {
 	   	static expectsParams = ['start', 'end']
 
@@ -169,6 +196,55 @@ e.g.:
 			foo(startsAndEndsWith: [start: 'G', end: 'f'])
 		}
 	}
+	
+## Example Persistent Constraint ##
+
+	import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler;
+	import org.hibernate.Criteria;
+	import org.hibernate.FlushMode;
+	import org.hibernate.HibernateException;
+	import org.hibernate.Session;
+	import org.hibernate.criterion.Restrictions;
+	import org.springframework.orm.hibernate3.HibernateCallback;
+
+	import java.util.ArrayList;
+	import java.util.Collections;
+	import java.util.Iterator;
+	import java.util.List;
+
+	class UniqueEgConstraint {
+    
+	    static persistent = true
+    
+	    def dbCall = { propertyValue, Session session -> 
+	        session.setFlushMode(FlushMode.MANUAL);
+
+	        try {
+	            boolean shouldValidate = true;
+	            if(propertyValue != null && DomainClassArtefactHandler.isDomainClass(propertyValue.getClass())) {
+	                shouldValidate = session.contains(propertyValue)
+	            }
+	            if(shouldValidate) {
+	                Criteria criteria = session.createCriteria( constraintOwningClass )
+	                        .add(Restrictions.eq( constraintPropertyName, propertyValue ))
+	                return criteria.list()
+	            } else {
+	                return null
+	            }
+	        } finally {
+	            session.setFlushMode(FlushMode.AUTO)
+	        }
+	    }
+    
+	    def validate = { propertyValue -> 
+	        dbCall.delegate = delegate
+	        def _v = dbCall.curry(propertyValue) as HibernateCallback
+	        def result = hibernateTemplate.executeFind(_v)
+        
+	        return result ? false : true    // If we find a result, then non-unique
+	    }
+	}
+
 	
 ## Notes ###
 

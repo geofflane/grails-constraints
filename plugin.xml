@@ -12,6 +12,7 @@
     <resource>UrlMappings</resource>
     <resource>TestController</resource>
     <resource>net.zorched.test.Address</resource>
+    <resource>net.zorched.test.Category</resource>
     <resource>net.zorched.test.Foo</resource>
     <resource>net.zorched.test.Login</resource>
     <resource>net.zorched.test.Person</resource>
@@ -23,6 +24,7 @@
     <resource>net.zorched.test.BeginsWithConstraint</resource>
     <resource>net.zorched.test.StartsAndEndsWithConstraint</resource>
     <resource>net.zorched.test.TwoLongConstraint</resource>
+    <resource>net.zorched.test.UniqueEgConstraint</resource>
   </resources>
   <dependencies />
 </plugin>
