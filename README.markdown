@@ -170,3 +170,32 @@ e.g.:
 		}
 	}
 	
+## Notes ###
+
+### Dependency Injection ###
+Constraints are standard Grails Artefacts which means that standard things like dependency injection are supported.
+You can inject a service or other Spring managed beans into your Constraint class if you need to use it.
+
+e.g.
+
+    class MyCustomConstratin {
+		def someService
+		
+		def validate = { val -> 
+			return someService.someMethod(val)
+		}
+	}
+
+### Logging ###
+Like dependency injection, your constraints classes will have access to the *log* property if you want to do logging
+in them.
+
+e.g.
+
+    class MyCustomConstratin {
+		def validate = { val -> 
+			log.debug "Calling MyCustomConstraint with value [${val}]"
+			// ...
+		}
+	}
+
