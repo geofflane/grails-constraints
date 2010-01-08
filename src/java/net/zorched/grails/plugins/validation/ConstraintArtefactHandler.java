@@ -34,8 +34,8 @@ public class ConstraintArtefactHandler extends ArtefactHandlerAdapter {
     }
 
      public boolean isArtefactClass(Class clazz) {
-        if(clazz == null) return false;
-        if(!clazz.getName().endsWith(DefaultGrailsConstraintClass.CONSTRAINT)) {
+        if (clazz == null) return false;
+        if (!clazz.getName().endsWith(DefaultGrailsConstraintClass.CONSTRAINT)) {
             return false;
         }
         return true;

@@ -17,9 +17,7 @@ package net.zorched.grails.plugins.validation;
 
 import grails.util.GrailsNameUtils;
 import groovy.lang.Closure;
-import groovy.lang.MetaMethod;
 import org.codehaus.groovy.grails.commons.AbstractInjectableGrailsClass;
-import org.codehaus.groovy.runtime.MethodClosure;
 
 import java.util.List;
 import java.util.Map;

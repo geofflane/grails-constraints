@@ -22,13 +22,14 @@ import net.zorched.constraints.*
 
 class ConstraintsGrailsPlugin {
     // the plugin version
-    def version = "0.2"
+    def version = "0.3"
 
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "1.1.1 > *"
 
     // the other plugins this plugin depends on
     def dependsOn = [:]
+
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
             "grails-app/views/*.gsp",
@@ -51,6 +52,7 @@ class ConstraintsGrailsPlugin {
     def documentation = "http://grails.org/GrailsConstraints+Plugin"
 
     def loadAfter = ['core', 'hibernate']
+
     def watchedResources = [
             "file:./grails-app/utils/**/*Constraint.groovy",
             "file:./plugins/*/grails-app/utils/**/*Constraint.groovy"
@@ -74,12 +76,15 @@ class ConstraintsGrailsPlugin {
     }
 
     def doWithDynamicMethods = {applicationContext ->
-        println "Configuring custom constraints..."
+        println "Constraints: ${version}. Configuring custom constraints..."
 
         boolean usingHibernate = manager.hasGrailsPlugin("hibernate")
         for (GrailsConstraintClass c in application.constraintClasses) {
             registerConstraint(c, usingHibernate, applicationContext)
         }
+
+        // HACK: Couldn't get Command objects to work without it, load order didn't seem to help
+        manager.refreshPlugin('controllers')
     }
     
     private void registerConstraint(constraintClass, usingHibernate, applicationContext) {
