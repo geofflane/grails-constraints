@@ -43,13 +43,13 @@ class ConstraintsGrailsPlugin {
     def author = "Geoff Lane"
     def authorEmail = "geoff@zorched.net"
     def title = "Custom domain constraints plugin"
-    def description = '''\\
+    def description = '''
     This plugin allows you to create custom domain validations that are applied the same
     way as built-in domain constraints.
     '''
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/GrailsConstraints+Plugin"
+    def documentation = "http://grails.org/plugin/constraints"
 
     def loadAfter = ['core', 'hibernate']
 

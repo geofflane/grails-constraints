@@ -254,7 +254,7 @@ You can inject a service or other Spring managed beans into your Constraint clas
 
 e.g.
 
-    class MyCustomConstratin {
+    class MyCustomConstraint {
 		def someService
 		
 		def validate = { val -> 
@@ -268,7 +268,7 @@ in them.
 
 e.g.
 
-    class MyCustomConstratin {
+    class MyCustomConstraint {
 		def validate = { val -> 
 			log.debug "Calling MyCustomConstraint with value [${val}]"
 			// ...
