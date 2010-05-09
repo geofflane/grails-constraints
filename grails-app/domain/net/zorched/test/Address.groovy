@@ -1,6 +1,6 @@
 package net.zorched.test
 
-class Address {
+class Address implements Serializable {
     String street
     String zip
     String phone

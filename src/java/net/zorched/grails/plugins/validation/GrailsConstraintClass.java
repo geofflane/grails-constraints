@@ -1,11 +1,11 @@
 /* Copyright 2009 the original author or authors.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,32 +14,43 @@
  */
 package net.zorched.grails.plugins.validation;
 
-import groovy.lang.Closure;
 import org.codehaus.groovy.grails.commons.InjectableGrailsClass;
-
-import java.util.Map;
 
 /**
  * Represents a validation class in Grails. This is a mediator around
  * the custom Groovy classes that provides an API to access static values
  * and access to the Closures.
- * 
+ *
  * @author Geoff Lane
- * 
  * @since 0.1
  */
 public interface GrailsConstraintClass extends InjectableGrailsClass {
-	
-	/**
-	 * Get the method which is executed by the validator.
-	 */
-	Closure getValidationMethod();
+
+    public static final String CONSTRAINT = "Constraint";
+
+    public static final String EXPECTS_PARAMS_PROPERTY = "expectsParams";
+    public static final String NAME_PROPERTY = "name";
+
+    /** The default error message if none is found in the message.properties */
+    public static final String DEFAULT_MESSAGE_PROPERTY = "defaultMessage";
+    /** The default message key to look up in messages.properties */
+    public static final String DEFAULT_MESSAGE_CODE_PROPERTY = "defaultMessageCode";
+    /** The default suffix to append to Class.property in the messages.properties for a custom error message*/
+    public static final String FAILURE_CODE_PROPERTY = "failureCode";
+
+    public static final String PERSISTENT_PROPERTY = "persistent";
+
+    public static final String VALIDATE = "validate";
+    public static final String SUPPORTS = "supports";
+
 
     /**
-     * Get the method which is executed to determine if the constrained property
-     * is supported by this Constraint.
+     * The validation method called
+     * @return True if the constraint validates
      */
-    Closure getSupportsMethod();
+    public boolean validate(Object[] params);
+
+    public boolean supports(Class aClass);
 
     /**
      * The name of the constraint that will be used to apply it to a property
@@ -52,7 +63,7 @@ public interface GrailsConstraintClass extends InjectableGrailsClass {
     /**
      * The default error message that will be shown to the user if the defaultMessageCode
      * or the failureCode is not found in messages.properties
-     * 
+     *
      * static defaultMessage = "xxx"
      */
     public String getDefaultMessage();
@@ -60,7 +71,7 @@ public interface GrailsConstraintClass extends InjectableGrailsClass {
     /**
      * The default error message that will be shown to the user if the
      * failureCode is not found in messages.properties
-     * 
+     *
      * Defaults to "default.invalid.${name}.message"
      * static defaultMessageCode = "xxx"
      */
@@ -74,10 +85,10 @@ public interface GrailsConstraintClass extends InjectableGrailsClass {
      * static failureCode = "xxx"
      */
     public String getFailureCode();
-    
+
     /**
      * Does this constraint need access to the database to perform validation.
-     * 
+     *
      * Defaults to false
      * static persistent = false
      */

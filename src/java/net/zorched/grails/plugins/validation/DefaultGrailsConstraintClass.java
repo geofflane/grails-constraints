@@ -1,4 +1,4 @@
-/* Copyright 2009 the original author or authors.
+/* Copyright 2006-2008 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,57 +12,65 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.zorched.grails.plugins.validation;
 
 import grails.util.GrailsNameUtils;
 import groovy.lang.Closure;
 import org.codehaus.groovy.grails.commons.AbstractInjectableGrailsClass;
+import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Grails artefact class which represents a constraint.
+ * Grails artefact class which represents a custom Constraint job.
  *
  * @author Geoff Lane
- * 
  * @since 0.1
  */
 public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass implements GrailsConstraintClass {
 
-	public static final String CONSTRAINT = "Constraint";
-
-    private static final String EXPECTS_PARAMS_PROPERTY = "expectsParams";
-    private static final String NAME_PROPERTY = "name";
-
-    /** The default error message if none is found in the message.properties */
-    private static final String DEFAULT_MESSAGE_PROPERTY = "defaultMessage";
-    /** The default message key to look up in messages.properties */
-    private static final String DEFAULT_MESSAGE_CODE_PROPERTY = "defaultMessageCode";
-    /** The default suffix to append to Class.property in the messages.properties for a custom error message*/
-    private static final String FAILURE_CODE_PROPERTY = "failureCode";
-
-    private static final String PERSISTENT_PROPERTY = "persistent";
-    
-    private static final String VALIDATE_CLOSURE = "validate";
-    private static final String SUPPORTS_CLOSURE = "supports";
-    
-    private Closure validateMethod;
-    private Closure supportsMethod;
-
     public DefaultGrailsConstraintClass(Class clazz) {
-		super(clazz, CONSTRAINT);
-        validateMethod = (Closure) getPropertyValue(VALIDATE_CLOSURE, Closure.class);
-        supportsMethod = (Closure) getPropertyValue(SUPPORTS_CLOSURE, Closure.class);
+        super(clazz, CONSTRAINT);
     }
 
-    public Closure getValidationMethod() {
-        return validateMethod;
+    public boolean supports(Class aClass) {
+        // FIXME: Check if supports exists
+        if (null != getMetaClass().respondsTo(getReferenceInstance(), SUPPORTS)) {
+            return (Boolean) getMetaClass().invokeMethod(getReferenceInstance(), SUPPORTS, new Object[] { aClass });
+        }
+
+        return true;
     }
 
-    public Closure getSupportsMethod() {
-        return supportsMethod;
+    public boolean validate(Object[] params) {
+        return (Boolean) getMetaClass().invokeMethod(getReferenceInstance(), VALIDATE, params);
+    }
+
+    public int getValidationPropertyCount() {
+        Closure c = (Closure) getPropertyOrStaticPropertyOrFieldValue(VALIDATE, Closure.class);
+        return c.getMaximumNumberOfParameters();
+    }
+
+    public void setParameter(Object constraintParameter) {
+        getMetaClass().invokeMethod(getReferenceInstance(), "setParams", constraintParameter);
+    }
+
+    public void setHibernateTemplate(ApplicationContext applicationContext) {
+        if (applicationContext.containsBean("sessionFactory")) {
+            HibernateTemplate template = new HibernateTemplate((SessionFactory) applicationContext.getBean("sessionFactory"),true);
+            getMetaClass().invokeMethod(getReferenceInstance(), "setHibernateTemplate", template);
+        }
+    }
+
+    public void setConstraintOwningClass(Object owningClass) {
+        getMetaClass().invokeMethod(getReferenceInstance(), "setConstraintOwningClass", owningClass);
+    }
+
+    public void setConstraintPropertyName(String constrainedPropertyName) {
+        getMetaClass().invokeMethod(getReferenceInstance(), "setConstraintPropertyName", constrainedPropertyName);
     }
 
     public String getName() {
@@ -94,11 +102,11 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
         }
 		return obj;
     }
-    
+
     public boolean isPersistent() {
         Boolean obj = (Boolean) getPropertyValue(PERSISTENT_PROPERTY);
 		if (obj != null) {
-            return obj.booleanValue();
+            return obj;
         }
         return false;
     }

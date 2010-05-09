@@ -15,6 +15,7 @@ public class AddressAnno {
     String phone
 
     static constraints = {
+        street(blank: false)
         zip(usZip: true)
         phone(usPhone: true)
     }

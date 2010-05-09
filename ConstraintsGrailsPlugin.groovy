@@ -14,11 +14,15 @@
 * limitations under the License.
 */
 
-import net.zorched.grails.plugins.validation.ConstraintArtefactHandler
-import net.zorched.grails.plugins.validation.GrailsConstraintClass
 import org.codehaus.groovy.grails.validation.ConstrainedProperty
+import net.zorched.grails.plugins.validation.GrailsConstraintClass
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean
+import net.zorched.grails.plugins.validation.ConstraintArtefactHandler
+import net.zorched.constraints.UsZipConstraint
+import net.zorched.constraints.UsPhoneConstraint
+import net.zorched.constraints.SsnConstraint
+import net.zorched.constraints.ComparisonConstraint
 import net.zorched.grails.plugins.validation.CustomConstraintFactory
-import net.zorched.constraints.*
 
 class ConstraintsGrailsPlugin {
     // the plugin version
@@ -39,7 +43,6 @@ class ConstraintsGrailsPlugin {
             "grails-app/utils/net/zorched/test/**.groovy"
     ]
 
-    // TODO Fill in these fields
     def author = "Geoff Lane"
     def authorEmail = "geoff@zorched.net"
     def title = "Custom domain constraints plugin"
@@ -51,14 +54,9 @@ class ConstraintsGrailsPlugin {
     // URL to the plugin's documentation
     def documentation = "http://grails.org/plugin/constraints"
 
-    def loadAfter = ['core', 'hibernate']
+    // def loadAfter = ['core', 'hibernate', 'controllers']
 
-    def watchedResources = [
-            "file:./grails-app/utils/**/*Constraint.groovy",
-            "file:./plugins/*/grails-app/utils/**/*Constraint.groovy"
-    ]
-
-    // We can add provided constraints in this plugin using this
+        // We can add provided constraints in this plugin using this
     def providedArtefacts = [
             ComparisonConstraint,
             SsnConstraint,
@@ -68,37 +66,75 @@ class ConstraintsGrailsPlugin {
 
     def artefacts = [new ConstraintArtefactHandler()]
 
-    def onChange = {event ->
+    def doWithSpring = {
+        // TODO Implement runtime spring config (optional)
+        application.constraintClasses.each {constraintClass ->
+            configureConstraintBeans.delegate = delegate
+            configureConstraintBeans(constraintClass)
+        }
+    }
+
+    def doWithDynamicMethods = { applicationContext ->
+        // TODO Implement registering dynamic methods to classes (optional)
+        application.constraintClasses.each {constraintClass ->
+            setupConstraintProperties(constraintClass)
+
+            registerConstraint.delegate = delegate
+            registerConstraint(constraintClass, false)
+        }
+
+        manager.refreshPlugin('validation')
+    }
+
+
+    def onChange = { event ->
+        // TODO Implement code that is executed when any artefact that this plugin is
+        // watching is modified and reloaded. The event contains: event.source,
+        // event.application, event.manager, event.ctx, and event.plugin.
+
         // XXX: Not sure if this works?
         if (application.isArtefactOfType(ConstraintArtefactHandler.TYPE, event.source)) {
+            setupConstraintProperties(event.source)
             application.addArtefact(ConstraintArtefactHandler.TYPE, event.source)
         }
     }
 
-    def doWithDynamicMethods = {applicationContext ->
-        println "Constraints: ${version}. Configuring custom constraints..."
-
-        boolean usingHibernate = manager.hasGrailsPlugin("hibernate")
-        for (GrailsConstraintClass c in application.constraintClasses) {
-            registerConstraint(c, usingHibernate, applicationContext)
+    def configureConstraintBeans = {GrailsConstraintClass constraintClass ->
+        // XXX: Not convinced this does anything
+        def fullName = constraintClass.fullName
+        "${fullName}Class"(MethodInvokingFactoryBean) {
+            targetObject = ref("grailsApplication", true)
+            targetMethod = "getArtefact"
+            arguments = [ConstraintArtefactHandler.TYPE, constraintClass.fullName]
         }
 
-        // HACK: Couldn't get Command objects to work without it, load order didn't seem to help
-        manager.refreshPlugin('controllers')
+        "${fullName}"(ref("${fullName}Class")) {bean ->
+            bean.factoryMethod = "newInstance"
+            bean.autowire = true
+        }
     }
-    
-    private void registerConstraint(constraintClass, usingHibernate, applicationContext) {
-        def constraintName = constraintClass.name
-        // println "Loading constraint: $constraintClass.Name"
 
-        if (usingHibernate) {
-            // println "Hibernate plugin in use, allowing persistent constraints"
-            ConstrainedProperty.registerNewConstraint(constraintName,
-                    new CustomConstraintFactory(applicationContext, constraintClass))
-        } else {
-            // Don't allow persistent constraints if hibernate is not being used
-            ConstrainedProperty.registerNewConstraint(constraintName,
-                    new CustomConstraintFactory(constraintClass))
+    def setupConstraintProperties = { constraintClass ->
+        Object params = null
+        Object hibernateTemplate = null
+        Object constraintOwningClass = null
+        String constraintPropertyName = null
+        constraintClass.clazz.metaClass {
+            setParams = {val -> params = val}
+            getParams = {-> return params}
+            setHibernateTemplate = {val -> hibernateTemplate = val}
+            getHibernateTemplate = {-> return hibernateTemplate}
+            setConstraintOwningClass = {val -> constraintOwningClass = val}
+            getConstraintOwningClass = {-> return constraintOwningClass}
+            setConstraintPropertyName = {val -> constraintPropertyName = val}
+            getConstraintPropertyName = {-> return constraintPropertyName}
         }
+    }
+
+    def registerConstraint = { constraintClass, usingHibernate ->
+        def constraintName = constraintClass.name
+        log.debug "Loading constraint: ${constraintClass.name}"
+
+        ConstrainedProperty.registerNewConstraint(constraintName, new CustomConstraintFactory(constraintClass, applicationContext))
     }
 }

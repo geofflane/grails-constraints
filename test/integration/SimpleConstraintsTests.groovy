@@ -44,4 +44,9 @@ public class SimpleConstraintsTests extends GroovyTestCase {
         def f = new Foo(bar: "xx", baz: ['a', 'b'])
         assert f.validate()
     }
+    
+    void testTwoLongConstaintAppliedToNullValidates() {
+        def f = new Foo(bar: null, baz: ['a', 'b'])
+        assert f.validate()
+    }
 }

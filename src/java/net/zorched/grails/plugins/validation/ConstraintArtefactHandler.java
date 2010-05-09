@@ -1,5 +1,5 @@
 /*
-* Copyright 2009 the original author or authors.
+* Copyright 2006-2008 the original author or authors.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -21,8 +21,7 @@ import org.codehaus.groovy.grails.commons.ArtefactHandlerAdapter;
 /**
  * Grails artefact handler for constraint classes.
  *
- * @author Geoff Lane (geoff@zorched.net)
- * 
+ * @author Geofff Lane
  * @since 0.1
  */
 public class ConstraintArtefactHandler extends ArtefactHandlerAdapter {
@@ -30,11 +29,11 @@ public class ConstraintArtefactHandler extends ArtefactHandlerAdapter {
     public static final String TYPE = "Constraint";
 
     public ConstraintArtefactHandler() {
-        super(TYPE, GrailsConstraintClass.class, DefaultGrailsConstraintClass.class, TYPE);
+        super(TYPE, GrailsConstraintClass.class, DefaultGrailsConstraintClass.class, null);
     }
 
-     public boolean isArtefactClass(Class clazz) {
-        if (clazz == null) return false;
+    public boolean isArtefactClass(Class clazz) {
+    if (clazz == null) return false;
         if (!clazz.getName().endsWith(DefaultGrailsConstraintClass.CONSTRAINT)) {
             return false;
         }

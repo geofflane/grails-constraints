@@ -5,7 +5,7 @@ class Foo {
     List baz
 
     static constraints = {
-        bar(twoLong: true)
+        bar(twoLong: true, nullable:true)
         baz(twoLong: true)
     }
 }
