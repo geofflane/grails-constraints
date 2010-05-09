@@ -50,6 +50,11 @@ public interface GrailsConstraintClass extends InjectableGrailsClass {
      */
     public boolean validate(Object[] params);
 
+    /**
+     * Can the constraint be applied to a specific type?
+     * @param aClass The type to check
+     * @return True if this constraint can be applied to the type
+     */
     public boolean supports(Class aClass);
 
     /**

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Grails artefact class which represents a custom Constraint job.
+ * Grails artefact class which represents a custom Constraint Constraint.
  *
  * @author Geoff Lane
  * @since 0.1
@@ -36,8 +36,12 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
         super(clazz, CONSTRAINT);
     }
 
+    /**
+     * Delegates the supports to the defined constraint
+     * @param aClass The type to check
+     * @return True if the constraint can be applied to this type
+     */
     public boolean supports(Class aClass) {
-        // FIXME: Check if supports exists
         if (null != getMetaClass().respondsTo(getReferenceInstance(), SUPPORTS)) {
             return (Boolean) getMetaClass().invokeMethod(getReferenceInstance(), SUPPORTS, new Object[] { aClass });
         }
@@ -45,6 +49,11 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
         return true;
     }
 
+    /**
+     * Delegates the validation to the defined constraint
+     * @param params The parameters to pass to the constraint closure
+     * @return True if the validation passed or false if it failed.
+     */
     public boolean validate(Object[] params) {
         return (Boolean) getMetaClass().invokeMethod(getReferenceInstance(), VALIDATE, params);
     }
@@ -54,10 +63,19 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
         return c.getMaximumNumberOfParameters();
     }
 
+    /**
+     * The value that was passed to the constraint parameter. This will be avilable as
+     * 'params' in a constraint.
+     * @param constraintParameter The value to make available in params
+     */
     public void setParameter(Object constraintParameter) {
         getMetaClass().invokeMethod(getReferenceInstance(), "setParams", constraintParameter);
     }
 
+    /**
+     * Make the hibernateTemplate available to persisent constraints
+     * @param applicationContext The application context used to lookup the hibernate SessionFactory
+     */
     public void setHibernateTemplate(ApplicationContext applicationContext) {
         if (applicationContext.containsBean("sessionFactory")) {
             HibernateTemplate template = new HibernateTemplate((SessionFactory) applicationContext.getBean("sessionFactory"),true);
@@ -65,10 +83,18 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
         }
     }
 
+    /**
+     * Make the owning class available to persistent constraints
+     * @param owningClass The class the constraint is applied to.
+     */
     public void setConstraintOwningClass(Object owningClass) {
         getMetaClass().invokeMethod(getReferenceInstance(), "setConstraintOwningClass", owningClass);
     }
 
+    /**
+     * Make the property the constraint was applied to available to persistent constraints
+     * @param constrainedPropertyName The property the constraint is applied to.
+     */
     public void setConstraintPropertyName(String constrainedPropertyName) {
         getMetaClass().invokeMethod(getReferenceInstance(), "setConstraintPropertyName", constrainedPropertyName);
     }

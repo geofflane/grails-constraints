@@ -27,7 +27,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
- * Job factory which retrieves Job instances from ApplicationContext.
+ * Constraint factory which instantiates new Constraints. This provides an adapter between the DefaultGrailsConstraintClass
+ * and the Constraint API.
  *
  * @author Geoff Lane
  * @since 0.1
@@ -42,16 +43,20 @@ public class CustomConstraintFactory implements ConstraintFactory {
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * Create a new Constraint instance
+     * @return A CustomConstraintClass instance
+     */
     public Constraint newInstance() {
         return new CustomConstraintClass(constraint);
     }
 
     /**
-     * Constraint implementation that invokes validate() on the GrailsConstraintClass instance.
+     * Constraint implementation that invokes validate() on the DefaultGrailsConstraintClass instance.
      */
     public class CustomConstraintClass extends AbstractConstraint {
 
-        DefaultGrailsConstraintClass constraint;
+        private DefaultGrailsConstraintClass constraint;
 
         public CustomConstraintClass(DefaultGrailsConstraintClass constraint) {
             this.constraint = constraint;
@@ -68,7 +73,7 @@ public class CustomConstraintFactory implements ConstraintFactory {
             if (validationParamCount > 2)
                 params.add(errors);
 
-            // Setup parameters needed by constraint
+            // Setup parameters needed by constraints
             constraint.setParameter(constraintParameter);
             if (constraint.isPersistent()) {
                 constraint.setHibernateTemplate(applicationContext);

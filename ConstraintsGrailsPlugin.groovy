@@ -39,6 +39,7 @@ class ConstraintsGrailsPlugin {
             "grails-app/views/*.gsp",
             "grails-app/views/**/*.gsp",
             "grails-app/domain/**/*.groovy",
+            "grails-app/services/**/*.groovy",
             "grails-app/controllers/**/*.groovy",
             "grails-app/utils/net/zorched/test/**/*.groovy"
     ]
@@ -54,9 +55,10 @@ class ConstraintsGrailsPlugin {
     // URL to the plugin's documentation
     def documentation = "http://grails.org/plugin/constraints"
 
+    // loadAfter just seemed to cause problems. It needs to load early.
     // def loadAfter = ['core', 'hibernate', 'controllers']
 
-        // We can add provided constraints in this plugin using this
+    // We can add provided constraints in this plugin using this
     def providedArtefacts = [
             ComparisonConstraint,
             SsnConstraint,
@@ -99,6 +101,10 @@ class ConstraintsGrailsPlugin {
         }
     }
 
+    /**
+     * Register the beans with Spring so that we can inject them later.
+     * Not sure if this is really needed.
+     */
     def configureConstraintBeans = {GrailsConstraintClass constraintClass ->
         // XXX: Not convinced this does anything
         def fullName = constraintClass.fullName
@@ -114,6 +120,9 @@ class ConstraintsGrailsPlugin {
         }
     }
 
+    /**
+     * Setup properties on the custom Constraints to make extra information available to them
+     */
     def setupConstraintProperties = { constraintClass ->
         Object params = null
         Object hibernateTemplate = null
@@ -131,6 +140,9 @@ class ConstraintsGrailsPlugin {
         }
     }
 
+    /**
+     * Register the Custom constraint with ConstrainedProperty. Manages creating them with a CustomConstraintFactory
+     */
     def registerConstraint = { constraintClass, usingHibernate ->
         def constraintName = constraintClass.name
         log.debug "Loading constraint: ${constraintClass.name}"
