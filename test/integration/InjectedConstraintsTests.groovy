@@ -1,4 +1,3 @@
-import net.zorched.test.Address
 import net.zorched.test.InjectedDom
 
 public class InjectedConstraintsTests extends GroovyTestCase {

@@ -1,30 +1,41 @@
-<plugin name='constraints' version='0.1' grailsVersion='1.1.1 &gt; *'>
+<plugin name='constraints' version='0.5' grailsVersion='1.1.1 &gt; *'>
   <author>Geoff Lane</author>
   <authorEmail>geoff@zorched.net</authorEmail>
   <title>Custom domain constraints plugin</title>
-  <description>\
+  <description>
     This plugin allows you to create custom domain validations that are applied the same
     way as built-in domain constraints.
     </description>
-  <documentation>http://grails.org/GrailsConstraints+Plugin</documentation>
+  <documentation>http://grails.org/plugin/constraints</documentation>
   <resources>
+    <resource>Config</resource>
     <resource>DataSource</resource>
     <resource>UrlMappings</resource>
+    <resource>AddressCommand</resource>
     <resource>TestController</resource>
     <resource>net.zorched.test.Address</resource>
     <resource>net.zorched.test.Category</resource>
     <resource>net.zorched.test.Foo</resource>
+    <resource>net.zorched.test.InjectedDom</resource>
     <resource>net.zorched.test.Login</resource>
     <resource>net.zorched.test.Person</resource>
     <resource>net.zorched.test.User</resource>
+    <resource>net.zorched.test.MyTestService</resource>
     <resource>net.zorched.constraints.ComparisonConstraint</resource>
     <resource>net.zorched.constraints.SsnConstraint</resource>
     <resource>net.zorched.constraints.UsPhoneConstraint</resource>
     <resource>net.zorched.constraints.UsZipConstraint</resource>
+    <resource>net.zorched.test.AddressAnno</resource>
     <resource>net.zorched.test.BeginsWithConstraint</resource>
+    <resource>net.zorched.test.InjectedConstraint</resource>
     <resource>net.zorched.test.StartsAndEndsWithConstraint</resource>
     <resource>net.zorched.test.TwoLongConstraint</resource>
     <resource>net.zorched.test.UniqueEgConstraint</resource>
   </resources>
-  <dependencies />
+  <dependencies>
+    <resolvers>
+      <resolver type='grailsPlugins' name='grailsPlugins' />
+    </resolvers>
+  </dependencies>
+  <behavior />
 </plugin>
