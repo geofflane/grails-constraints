@@ -25,7 +25,6 @@ class UsPhoneConstraint {
     }
 
     def validate = { val ->
-        System.out.println("Called UsPhoneConstraint.validate: ${val}")
         if (! params)
             return true
         return val ==~ /^[01]?[- .]?(\([2-9]\d{2}\)|[2-9]\d{2})[- .]?\d{3}[- .]?\d{4}$/
