@@ -23,6 +23,7 @@ class ComparisonConstraint {
     static defaultMessage = "Property [{0}] of class [{1}] with value [{2}] does not match the property [{3}]"
 
     def validate = { val, target ->
+        log.debug("Called ComparisonConstraint.validate: ${val}")
         def compareVal = target."$params"
         if (null == val || null == compareVal)
             return false

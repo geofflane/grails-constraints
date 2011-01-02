@@ -24,9 +24,10 @@ class SsnConstraint {
         return type!= null && String.class.isAssignableFrom(type);
     }
 
-    def validate = { propertyValue ->
+    def validate = { val ->
+        log.debug("Called SsnConstraint.validate: ${val}")
         if (! params)
             return true
-        return propertyValue ==~ /\d{3}(-)?\d{2}(-)?\d{4}/
+        return val ==~ /\d{3}(-)?\d{2}(-)?\d{4}/
     }
 }
