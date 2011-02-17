@@ -104,6 +104,14 @@ public class CustomConstraintFactory implements ConstraintFactory {
             return constraint.getName();
         }
 
+        protected boolean skipBlankValues() {
+            return constraint.skipBlankValues();
+        }
+
+        protected boolean skipNullValues() {
+            return constraint.skipNullValues();
+        }
+
         public void setParameter(Object constraintParameter) {
             constraint.validateParams(constraintParameter, constraintPropertyName, constraintOwningClass);
             super.setParameter(constraintParameter);

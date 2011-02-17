@@ -49,6 +49,22 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
         return true;
     }
 
+    public boolean skipBlankValues() {
+        Boolean obj = (Boolean) getPropertyValue("skipBlankValues");
+		if (obj != null) {
+            return obj;
+        }
+        return true;
+    }
+
+    public boolean skipNullValues() {
+        Boolean obj = (Boolean) getPropertyValue("skipNullValues");
+		if (obj != null) {
+            return obj;
+        }
+        return true;
+    }
+
     /**
      * Delegates the validation to the defined constraint
      * @param params The parameters to pass to the constraint closure
