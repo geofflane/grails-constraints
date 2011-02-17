@@ -7,6 +7,12 @@ With this plugin, you can create reusable, shareable constraints that you can us
 multiple Domain objects. You can then package Constraints in plugins of their own and reuse them across
 projects as well.
 
+### Please Note: ###
+Plugins are not loaded during Unit Tests, so you cannot test constraints in your unit tests. They should work during
+integration tests though, so you can test them there.
+
+## Get Started ##
+
 1. Create a groovy file in */grails-app/utils/* called *Constraint.groovy
 2. Implement a validate closure
 3. Add appropriate messages to */grails-app/i18n/messages.properties*
