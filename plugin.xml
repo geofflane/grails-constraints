@@ -1,4 +1,4 @@
-<plugin name='constraints' version='0.5.1' grailsVersion='1.1.1 &gt; *'>
+<plugin name='constraints' version='0.6.0' grailsVersion='1.1.1 &gt; *'>
   <author>Geoff Lane</author>
   <authorEmail>geoff@zorched.net</authorEmail>
   <title>Custom domain constraints plugin</title>
@@ -8,6 +8,7 @@
     </description>
   <documentation>http://grails.org/plugin/constraints</documentation>
   <resources>
+    <resource>BuildConfig</resource>
     <resource>Config</resource>
     <resource>DataSource</resource>
     <resource>UrlMappings</resource>
@@ -32,11 +33,7 @@
     <resource>net.zorched.test.TwoLongConstraint</resource>
     <resource>net.zorched.test.UniqueEgConstraint</resource>
   </resources>
-  <dependencies>
-    <resolvers>
-      <resolver type='grailsPlugins' name='grailsPlugins' />
-    </resolvers>
-  </dependencies>
+  <dependencies />
   <behavior>
     <method name='setParams' artefact='Constraint' type='compareTo'>
       <description />
