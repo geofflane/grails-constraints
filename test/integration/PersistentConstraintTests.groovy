@@ -1,7 +1,9 @@
 import net.zorched.test.Category
+import org.junit.Test
 
-class PersistentConstraintTests extends GroovyTestCase {
-    
+class PersistentConstraintTests {
+
+    @Test
     void testExampleUniqueConstraintWorks() {
         def c = new Category(name: "Foo")
         assert c.save()

@@ -25,6 +25,9 @@ class UniqueEgConstraint {
                 shouldValidate = session.contains(propertyValue)
             }
             if(shouldValidate) {
+                assert null != constraintOwningClass
+                assert null != constraintPropertyName
+
                 Criteria criteria = session.createCriteria(constraintOwningClass)
                         .add(Restrictions.eq(constraintPropertyName, propertyValue))
                 return criteria.list()

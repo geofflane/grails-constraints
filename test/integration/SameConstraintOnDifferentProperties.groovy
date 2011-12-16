@@ -1,7 +1,9 @@
 import net.zorched.test.Person
+import org.junit.Test
 
-class SameConstraintOnDifferentProperties extends GroovyTestCase {
-    
+class SameConstraintOnDifferentProperties {
+
+    @Test
     void testMultipleBeginsWithDontStepOnEachOthersToes() {
         def p = new Person(firstName: "Geoffrey", middleName: "Michael", lastName: "Lane")
         assert p.validate()

@@ -1,8 +1,10 @@
 import net.zorched.constraints.SsnConstraint
 import org.apache.commons.logging.LogFactory
+import org.junit.Test
 
 class SsnTests extends GroovyTestCase {
-    
+
+    @Test
     void testValidationNotCalledIfFalsePassedAsParam() {
         def v = getConstraint(false)
         
@@ -11,6 +13,7 @@ class SsnTests extends GroovyTestCase {
         assert v.validate(null)
     }
 
+    @Test
     void testValidatesSsn() {
         def v = getConstraint(true)
         
@@ -18,6 +21,7 @@ class SsnTests extends GroovyTestCase {
         assert v.validate("000-00-0000")
     }
 
+    @Test
     void testDoesntValidateInvalidSsns() {
         def v = getConstraint(true)
         

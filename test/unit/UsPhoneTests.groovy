@@ -1,8 +1,10 @@
 import net.zorched.constraints.UsPhoneConstraint
 import org.apache.commons.logging.LogFactory
+import org.junit.Test
 
 class UsPhoneTests extends GroovyTestCase {
 
+    @Test
     void testPhoneValidationNotCalledIfFalsePassedAsParam() {
         def v = getConstraint(false)
         
@@ -10,7 +12,8 @@ class UsPhoneTests extends GroovyTestCase {
         assert v.validate("")
         assert v.validate( null)
     }
-    
+
+    @Test
     void testValidUsPhones() {
         def v = getConstraint(true)
         
@@ -18,6 +21,7 @@ class UsPhoneTests extends GroovyTestCase {
         assert v.validate("1-800-555-1212")
     }
 
+    @Test
     void testInvalidUsPhones() {
         def v = getConstraint(true)
         
