@@ -21,7 +21,7 @@ import org.codehaus.groovy.grails.commons.ArtefactHandlerAdapter;
 /**
  * Grails artefact handler for constraint classes.
  *
- * @author Geofff Lane
+ * @author Geoff Lane
  * @since 0.1
  */
 public class ConstraintArtefactHandler extends ArtefactHandlerAdapter {
@@ -33,7 +33,7 @@ public class ConstraintArtefactHandler extends ArtefactHandlerAdapter {
     }
 
     public boolean isArtefactClass(Class clazz) {
-    if (clazz == null) return false;
+        if (clazz == null) return false;
         if (!clazz.getName().endsWith(DefaultGrailsConstraintClass.CONSTRAINT)) {
             return false;
         }

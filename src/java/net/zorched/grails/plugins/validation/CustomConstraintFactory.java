@@ -75,10 +75,10 @@ public class CustomConstraintFactory implements ConstraintFactory {
 
             // Setup parameters needed by constraints
             constraint.setParameter(constraintParameter);
+            constraint.setConstraintOwningClass(constraintOwningClass);
+            constraint.setConstraintPropertyName(constraintPropertyName);
             if (constraint.isPersistent()) {
                 constraint.setHibernateTemplate(applicationContext);
-                constraint.setConstraintOwningClass(constraintOwningClass);
-                constraint.setConstraintPropertyName(constraintPropertyName);
             }
 
             // Inject dependencies
