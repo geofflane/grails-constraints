@@ -29,7 +29,7 @@ class ConstraintsGrailsPlugin {
     def version = "0.7.0"
 
     // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "2.0.0 > *"
+    def grailsVersion = "2.0 > *"
 
     // the other plugins this plugin depends on
     def dependsOn = [:]
@@ -54,7 +54,7 @@ class ConstraintsGrailsPlugin {
     way as built-in domain constraints.
     '''
 
-    def developers = [ [ name: "Geoff Lane", email: "geoff@xorched.net" ] ]
+    def developers = [ [ name: "Geoff Lane", email: "geoff@zorched.net" ] ]
     def issueManagement = [ system: "Github", url: "https://github.com/geofflane/grails-constraints/issues" ]
     def scm = [ url: "https://github.com/geofflane/grails-constraints" ]
     def documentation = "http://grails.org/plugin/constraints"
