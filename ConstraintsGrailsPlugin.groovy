@@ -44,6 +44,8 @@ class ConstraintsGrailsPlugin {
             "grails-app/utils/net/zorched/test/**/*.groovy"
     ]
 
+    def license = "APACHE"
+    def organization = [ name: "One-Line Fix, LLC", url: "http://www.onelinefix.com" ]
     def author = "Geoff Lane"
     def authorEmail = "geoff@zorched.net"
     def title = "Custom domain constraints plugin"
@@ -52,7 +54,9 @@ class ConstraintsGrailsPlugin {
     way as built-in domain constraints.
     '''
 
-    // URL to the plugin's documentation
+    def developers = [ [ name: "Geoff Lane", email: "geoff@xorched.net" ] ]
+    def issueManagement = [ system: "Github", url: "https://github.com/geofflane/grails-constraints/issues" ]
+    def scm = [ url: "https://github.com/geofflane/grails-constraints" ]
     def documentation = "http://grails.org/plugin/constraints"
 
     // loadAfter just seemed to cause problems. It needs to load early.
