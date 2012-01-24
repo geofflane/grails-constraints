@@ -71,7 +71,8 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
      * @return True if the validation passed or false if it failed.
      */
     public boolean validate(Object[] params) {
-        return (Boolean) getMetaClass().invokeMethod(getReferenceInstance(), VALIDATE, params);
+        Object result = getMetaClass().invokeMethod(getReferenceInstance(), VALIDATE, params);
+        return result != null ? (Boolean)result : true;
     }
 
     public int getValidationPropertyCount() {
