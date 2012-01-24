@@ -72,6 +72,10 @@ class ConstraintsGrailsPlugin {
 
     def artefacts = [new ConstraintArtefactHandler()]
 
+    def watchedResources = [
+        "file:./grails-app/utils/*Constraint.groovy"
+    ]
+
     def doWithSpring = {
         // TODO Implement runtime spring config (optional)
         application.constraintClasses.each {constraintClass ->
@@ -96,10 +100,9 @@ class ConstraintsGrailsPlugin {
         // watching is modified and reloaded. The event contains: event.source,
         // event.application, event.manager, event.ctx, and event.plugin.
 
-        // XXX: Not sure if this works?
         if (application.isArtefactOfType(ConstraintArtefactHandler.TYPE, event.source)) {
-            setupConstraintProperties(event.source)
-            application.addArtefact(ConstraintArtefactHandler.TYPE, event.source)
+            def artefactClass = application.addArtefact(ConstraintArtefactHandler.TYPE, event.source)
+            setupConstraintProperties(artefactClass)
         }
     }
 
