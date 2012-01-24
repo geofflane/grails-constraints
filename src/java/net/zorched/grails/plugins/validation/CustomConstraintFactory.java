@@ -15,6 +15,7 @@
 package net.zorched.grails.plugins.validation;
 
 import org.codehaus.groovy.grails.validation.AbstractConstraint;
+import org.codehaus.groovy.grails.validation.ConstrainedProperty;
 import org.codehaus.groovy.grails.validation.Constraint;
 import org.codehaus.groovy.grails.validation.ConstraintFactory;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -25,6 +26,7 @@ import org.springframework.validation.Errors;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Constraint factory which instantiates new Constraints. This provides an adapter between the DefaultGrailsConstraintClass
@@ -84,11 +86,53 @@ public class CustomConstraintFactory implements ConstraintFactory {
             // Inject dependencies
             applicationContext.getAutowireCapableBeanFactory().autowireBeanProperties(constraint.getReferenceInstance(), AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false);
 
-            boolean isValid = constraint.validate(params.toArray());
+            Object result = constraint.validate(params.toArray());
+            boolean bad = false;
+            String errmsg = constraint.getFailureCode();
+            Object[] args = null;
 
-            if (! isValid) {
-                Object[] args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue, constraintParameter };
-                super.rejectValue(target, errors, constraint.getDefaultMessageCode(), constraint.getFailureCode(), args);
+            if (result != null) {
+                if (result instanceof Boolean) {
+                    bad = !((Boolean)result).booleanValue();
+                }
+                else if (result instanceof CharSequence) {
+                    bad = true;
+                    errmsg = result.toString();
+                }
+                else if ((result instanceof Collection<?>) || result.getClass().isArray()) {
+                    bad = true;
+                    Object[] values = (result instanceof Collection<?>) ? ((Collection<?>)result).toArray() : (Object[])result;
+                    if (!(values[0] instanceof String)) {
+                        throw new IllegalArgumentException("Return value from validation closure [" +
+                                ConstrainedProperty.VALIDATOR_CONSTRAINT+"] of property ["+constraintPropertyName+"] of class [" +
+                                constraintOwningClass+"] is returning a list but the first element must be a string " +
+                                "containing the error message code");
+                    }
+                    errmsg = (String)values[0];
+                    args = new Object[values.length - 1 + 3];
+                    int i = 0;
+                    args[i++] = constraintPropertyName;
+                    args[i++] = constraintOwningClass;
+                    args[i++] = propertyValue;
+                    System.arraycopy(values, 1, args, i, values.length - 1);
+                }
+                else {
+                    throw new IllegalArgumentException("Return value from validation closure [" +
+                            ConstrainedProperty.VALIDATOR_CONSTRAINT+"] of property [" + constraintPropertyName +
+                            "] of class [" + constraintOwningClass +
+                            "] must be a boolean, a string, an array or a collection");
+                }
+            }
+
+            if (bad) {
+                if (args == null) {
+                    args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue };
+                }
+                /*super.rejectValue(target, errors, ConstrainedProperty.DEFAULT_INVALID_VALIDATOR_MESSAGE_CODE,
+                        errmsg == null ? ConstrainedProperty.VALIDATOR_CONSTRAINT + ConstrainedProperty.INVALID_SUFFIX: errmsg, args);*/
+
+                /*Object[] args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue, constraintParameter };*/
+                super.rejectValue(target, errors, constraint.getDefaultMessageCode(), errmsg, args);
             }
         }
 

@@ -48,7 +48,7 @@ public interface GrailsConstraintClass extends InjectableGrailsClass {
      * The validation method called
      * @return True if the constraint validates
      */
-    public boolean validate(Object[] params);
+    public Object validate(Object[] params);
 
     /**
      * Can the constraint be applied to a specific type?
