@@ -127,12 +127,15 @@ class ConstraintsGrailsPlugin {
      */
     def setupConstraintProperties = { constraintClass ->
         Object params = null
+        boolean veto = false
         Object hibernateTemplate = null
         Object constraintOwningClass = null
         String constraintPropertyName = null
         constraintClass.clazz.metaClass {
             setParams = {val -> params = val}
             getParams = {-> return params}
+            setVeto = {boolean val -> veto = val}
+            getVeto = {-> veto }
             setHibernateTemplate = {val -> hibernateTemplate = val}
             getHibernateTemplate = {-> return hibernateTemplate}
             setConstraintOwningClass = {val -> constraintOwningClass = val}

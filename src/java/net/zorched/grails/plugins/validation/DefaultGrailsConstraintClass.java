@@ -187,4 +187,24 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
             throw new IllegalArgumentException("Not a supported type");
         }
     }
+
+    public void setVeto(boolean veto) {
+        getMetaClass().invokeMethod(getReferenceInstance(), "setVeto", veto);
+    }
+
+    public boolean getVeto() {
+        Boolean obj = (Boolean)getMetaClass().invokeMethod(getReferenceInstance(), "getVeto", new Object[] {});
+        if (obj != null) {
+            return obj;
+        }
+        return false;
+    }
+
+    public boolean isVetoer() {
+        Boolean obj = (Boolean) getPropertyValue(VETOER_PROPERTY);
+        if (obj != null) {
+            return obj;
+        }
+        return false;
+    }
 }

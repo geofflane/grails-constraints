@@ -17,6 +17,7 @@ package net.zorched.grails.plugins.validation;
 import org.codehaus.groovy.grails.validation.AbstractConstraint;
 import org.codehaus.groovy.grails.validation.Constraint;
 import org.codehaus.groovy.grails.validation.ConstraintFactory;
+import org.codehaus.groovy.grails.validation.VetoingConstraint;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.ReflectionUtils;
@@ -48,7 +49,12 @@ public class CustomConstraintFactory implements ConstraintFactory {
      * @return A CustomConstraintClass instance
      */
     public Constraint newInstance() {
-        return new CustomConstraintClass(constraint);
+        if(constraint.isVetoer()) {
+            return new CustomVetoingConstraintClass(constraint);
+        }
+        else {
+            return new CustomConstraintClass(constraint);
+        }
     }
 
     /**
@@ -115,6 +121,26 @@ public class CustomConstraintFactory implements ConstraintFactory {
         public void setParameter(Object constraintParameter) {
             constraint.validateParams(constraintParameter, constraintPropertyName, constraintOwningClass);
             super.setParameter(constraintParameter);
+        }
+    }
+
+    /**
+     * Slightly modified version of CustomConstraintClass that supports the concept of vetoing.
+     */
+    public class CustomVetoingConstraintClass extends CustomConstraintClass implements VetoingConstraint {
+        public CustomVetoingConstraintClass(DefaultGrailsConstraintClass constraint) {
+            super(constraint);
+        }
+
+        @Override
+        public boolean validateWithVetoing(Object target, Object propertyValue, Errors errors) {
+            this.processValidate(target, propertyValue, errors);
+
+            // Check if the constraint exercised veto power, and reset the flag.
+            boolean vetoed = constraint.getVeto();
+            constraint.setVeto(false);
+
+            return vetoed;
         }
     }
 }
