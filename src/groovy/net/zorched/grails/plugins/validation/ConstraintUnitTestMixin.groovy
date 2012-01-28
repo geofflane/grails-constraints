@@ -14,10 +14,10 @@ class ConstraintUnitTestMixin extends GrailsUnitTestMixin {
     def <T> T mockConstraint(Class<T> constraintClass) {
         def instance = constraintClass.newInstance()
 
-        instance.metaClass.getParams = {-> params }
-        instance.metaClass.setParams = {newParams -> params = newParams }
-        instance.metaClass.getVeto = {-> veto }
-        instance.metaClass.setVeto = {newVeto -> veto = newVeto }
+        constraintClass.metaClass.getParams = {-> params }
+        constraintClass.metaClass.setParams = {newParams -> params = newParams }
+        constraintClass.metaClass.getVeto = {-> veto }
+        constraintClass.metaClass.setVeto = {newVeto -> veto = newVeto }
 
         return instance
     }
