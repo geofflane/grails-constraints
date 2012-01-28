@@ -80,7 +80,7 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
     }
 
     /**
-     * The value that was passed to the constraint parameter. This will be avilable as
+     * The value that was passed to the constraint parameter. This will be available as
      * 'params' in a constraint.
      * @param constraintParameter The value to make available in params
      */
