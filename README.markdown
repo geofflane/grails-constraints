@@ -63,8 +63,20 @@ e.g.
     }
 
 ### validate closure (required) ###
-The validate closure is the main part of the algorithm where validation is performed. It should return true if the
-validation was successful and false if the validation did not succeed.
+The validate closure is the main part of the algorithm where validation is performed. It should return a value to indicate
+if the validation was successful.
+
+Successful validation is indicated by the return of:
+
+1. true
+2. null
+
+An unsuccessful validation is indicated by the return of:
+
+1. false
+2. A String which is used as the error message to show the user
+3. A Collection with first element being message code, and following elements being message parameters
+4. An Array with first element being message code, and following elements being message parameters
 
 The validate closure takes up to 3 parameters:
 

@@ -3,7 +3,7 @@ import org.junit.Test
 
 class ExtendedValidatorTests {
     @Test
-    void testCodeReturnedFromValidator() {
+    void test_code_returned_from_validator() {
         def a = new HasExtendedValidators(foo:"bar")
         a.validate()
 
@@ -12,7 +12,7 @@ class ExtendedValidatorTests {
     }
 
     @Test
-    void testCodeAndArgumentsFromValidator() {
+    void test_code_and_arguments_from_validator() {
         def a = new HasExtendedValidators(bar:"foo")
         a.validate()
 
@@ -25,5 +25,11 @@ class ExtendedValidatorTests {
         assert error.arguments[2] == "foo"  // property value
         assert error.arguments[3] == "foo"  // custom param #1
         assert error.arguments[4] == "bar"  // custom param #2
+    }
+
+    @Test
+    void test_null_returned_from_validator() {
+        def a = new HasExtendedValidators(baz:"foo")
+        assert a.validate()     // Null returned from validator means valid
     }
 }
