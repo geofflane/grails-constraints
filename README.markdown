@@ -293,3 +293,24 @@ e.g.
 		}
 	}
 
+
+### Testing ###
+@TestMixin support has been added to make Constraints easy to test using Unit tests.
+
+e.g.
+
+    @TestMixin(ConstraintUnitTestMixin)
+    class UsPhoneConstraintTest {
+        @Test
+        void testUsPhoneValidation() {
+            def constraint = testFor(UsPhoneConstraint)
+
+            // Params are automatically mixed in to the test class and exposed
+            // to the constraint with the call above.
+            params = true
+
+            assertTrue constraint.validate("5135551212")
+            assertFalse constraint.validate("bad")
+        }
+    }
+
