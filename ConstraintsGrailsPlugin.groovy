@@ -89,8 +89,7 @@ class ConstraintsGrailsPlugin {
         application.constraintClasses.each {constraintClass ->
             setupConstraintProperties(constraintClass)
 
-            registerConstraint.delegate = delegate
-            registerConstraint(constraintClass, false)
+            registerConstraint(applicationContext, constraintClass)
         }
     }
 
@@ -103,6 +102,8 @@ class ConstraintsGrailsPlugin {
         if (application.isArtefactOfType(ConstraintArtefactHandler.TYPE, event.source)) {
             def artefactClass = application.addArtefact(ConstraintArtefactHandler.TYPE, event.source)
             setupConstraintProperties(artefactClass)
+
+            registerConstraint(event.ctx, artefactClass)
         }
     }
 
@@ -145,13 +146,15 @@ class ConstraintsGrailsPlugin {
         }
     }
 
-    /**
-     * Register the Custom constraint with ConstrainedProperty. Manages creating them with a CustomConstraintFactory
-     */
-    def registerConstraint = { constraintClass, usingHibernate ->
+    static void registerConstraint(ctx, constraintClass) {
         def constraintName = constraintClass.name
-        log.debug "Loading constraint: ${constraintClass.name}"
 
-        ConstrainedProperty.registerNewConstraint(constraintName, new CustomConstraintFactory(constraintClass, applicationContext))
+        // Removing the constraint is safe, as any current classes will continue to hold onto the old custom constraint
+        // factory reference, which in turn holds on to the DefaultGrailsConstraintClass class (which has already been
+        // auto reloaded in the case of a change event). So really, this just makes sure we don't keep creating
+        // CustomConstraintFactories every time an existing constraint is modified.
+        ConstrainedProperty.removeConstraint(constraintName, CustomConstraintFactory)
+
+        ConstrainedProperty.registerNewConstraint(constraintName, new CustomConstraintFactory(constraintClass, ctx))
     }
 }
