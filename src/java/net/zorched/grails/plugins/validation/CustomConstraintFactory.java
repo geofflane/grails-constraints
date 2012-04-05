@@ -22,6 +22,7 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.Errors;
+import org.springframework.web.context.request.RequestContextHolder;
 
 
 import java.lang.reflect.Method;
@@ -75,13 +76,7 @@ public class CustomConstraintFactory implements ConstraintFactory {
             if (validationParamCount > 2)
                 params.add(errors);
 
-            // Setup parameters needed by constraints
-            constraint.setParameter(constraintParameter);
-            constraint.setConstraintOwningClass(constraintOwningClass);
-            constraint.setConstraintPropertyName(constraintPropertyName);
-            if (constraint.isPersistent()) {
-                constraint.setHibernateTemplate(applicationContext);
-            }
+            RequestContextHolder.currentRequestAttributes().setAttribute(RequestConstraintApi.CONSTRAINT_REQUEST_ATTRIBUTE, this, 0);
 
             // Inject dependencies
             applicationContext.getAutowireCapableBeanFactory().autowireBeanProperties(constraint.getReferenceInstance(), AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false);
@@ -148,6 +143,10 @@ public class CustomConstraintFactory implements ConstraintFactory {
 
         protected boolean skipNullValues() {
             return constraint.skipNullValues();
+        }
+        
+        public Class getConstraintOwningClass() {
+            return this.constraintOwningClass;
         }
 
         public void setParameter(Object constraintParameter) {

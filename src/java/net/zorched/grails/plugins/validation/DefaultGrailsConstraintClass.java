@@ -79,42 +79,6 @@ public class DefaultGrailsConstraintClass extends AbstractInjectableGrailsClass 
         return c.getMaximumNumberOfParameters();
     }
 
-    /**
-     * The value that was passed to the constraint parameter. This will be available as
-     * 'params' in a constraint.
-     * @param constraintParameter The value to make available in params
-     */
-    public void setParameter(Object constraintParameter) {
-        getMetaClass().invokeMethod(getReferenceInstance(), "setParams", constraintParameter);
-    }
-
-    /**
-     * Make the hibernateTemplate available to persisent constraints
-     * @param applicationContext The application context used to lookup the hibernate SessionFactory
-     */
-    public void setHibernateTemplate(ApplicationContext applicationContext) {
-        if (applicationContext.containsBean("sessionFactory")) {
-            HibernateTemplate template = new HibernateTemplate((SessionFactory) applicationContext.getBean("sessionFactory"),true);
-            getMetaClass().invokeMethod(getReferenceInstance(), "setHibernateTemplate", template);
-        }
-    }
-
-    /**
-     * Make the owning class available to persistent constraints
-     * @param owningClass The class the constraint is applied to.
-     */
-    public void setConstraintOwningClass(Object owningClass) {
-        getMetaClass().invokeMethod(getReferenceInstance(), "setConstraintOwningClass", owningClass);
-    }
-
-    /**
-     * Make the property the constraint was applied to available to persistent constraints
-     * @param constrainedPropertyName The property the constraint is applied to.
-     */
-    public void setConstraintPropertyName(String constrainedPropertyName) {
-        getMetaClass().invokeMethod(getReferenceInstance(), "setConstraintPropertyName", constrainedPropertyName);
-    }
-
     public String getName() {
         return getConstraintName();
 	}
