@@ -39,6 +39,7 @@ public interface GrailsConstraintClass extends InjectableGrailsClass {
     public static final String FAILURE_CODE_PROPERTY = "failureCode";
 
     public static final String PERSISTENT_PROPERTY = "persistent";
+    public static final String VETOER_PROPERTY = "vetoer";
 
     public static final String VALIDATE = "validate";
     public static final String SUPPORTS = "supports";
@@ -98,4 +99,11 @@ public interface GrailsConstraintClass extends InjectableGrailsClass {
      * static persistent = false
      */
     public boolean isPersistent();
+
+    /**
+     * Can this constraint veto all following constraints?
+     * Defaults to false
+     * static veto = true
+     */
+    public boolean isVetoer();
 }
