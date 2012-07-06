@@ -2,3 +2,4 @@ stacktrace.log
 *.zip
 reports
 target
+.idea
